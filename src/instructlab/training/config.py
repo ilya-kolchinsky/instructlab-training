@@ -158,3 +158,5 @@ class TrainingArgs(BaseModel):
     # https://github.com/instructlab/training/issues/28
     # quantize_dtype: QuantizeDataType = QuantizeDataType.NONE
     lora: LoraOptions | None = None
+
+    num_parallel_procs: int

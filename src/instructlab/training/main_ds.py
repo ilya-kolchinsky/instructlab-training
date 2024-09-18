@@ -648,6 +648,7 @@ def run_training(torch_args: TorchrunArgs, train_args: TrainingArgs) -> None:
             data_path=train_args.data_path,
             max_seq_len=train_args.max_seq_len,
             chat_tmpl_path=train_args.chat_tmpl_path,
+            num_parallel_procs=train_args.num_parallel_procs
         )
     )
 
