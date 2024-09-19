@@ -22,6 +22,7 @@ from torch.distributed.fsdp import (
     MixedPrecision,
     BackwardPrefetch,
     ShardingStrategy,
+    CPUOffload,
 )
 from torch.distributed.fsdp.wrap import (
     transformer_auto_wrap_policy,
@@ -263,6 +264,7 @@ def setup_model(args, tokenizer, train_loader, grad_accum):
         backward_prefetch=BackwardPrefetch.BACKWARD_PRE,
         sharding_strategy=ShardingStrategy[args.sharding_strategy],
         device_id=torch.cuda.current_device(),
+        cpu_offload=CPUOffload(offload_params=True),
     )
         # granite gradient checkpointing is handled uniformly
     # for both lora and full here
