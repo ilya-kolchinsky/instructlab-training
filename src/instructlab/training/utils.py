@@ -704,6 +704,9 @@ def save_hf_format(args, model, tokenizer, samples_seen):
     CONFIG_NAME = "config.json"
     WEIGHTS_NAME = "pytorch_model.bin"
 
+    # explicitly offload model to CPU before collecting state dict
+    model.to(torch.device('cpu'))
+
     with FSDP.state_dict_type(
         model,
         StateDictType.FULL_STATE_DICT,
