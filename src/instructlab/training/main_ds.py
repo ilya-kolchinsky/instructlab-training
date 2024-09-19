@@ -491,7 +491,7 @@ def train(args, model, optimizer, lr_scheduler, tokenizer, train_loader, grad_ac
                     }
                 )
 
-            if global_step * batch_size % args.save_samples == 0:
+            if args.save_samples > 0 and global_step * batch_size % args.save_samples == 0:
                 # save_hf_format_ds(
                 #     args,
                 #     model,
