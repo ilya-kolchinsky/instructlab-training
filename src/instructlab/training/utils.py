@@ -705,6 +705,7 @@ def save_hf_format(args, model, tokenizer, samples_seen):
     WEIGHTS_NAME = "pytorch_model.bin"
 
     # explicitly offload model to CPU before collecting state dict
+    device = next(model.parameters()).device
     model.to(torch.device('cpu'))
 
     with FSDP.state_dict_type(
@@ -721,6 +722,8 @@ def save_hf_format(args, model, tokenizer, samples_seen):
         torch.save(model_state, str(output_model_file))
         model.module.config.to_json_file(str(output_config_file))
         tokenizer.save_pretrained(str(output_dir))
+    model.to(device)
+
     dist.barrier()
     log_rank_0(f"\033[93mModel saved in {output_dir}\033[0m", to_print=True)
     log_rank_0(f"saving took {time.time() - start} seconds")
